@@ -6,8 +6,8 @@
 
     var x = canvas.width / 2;
     var y = canvas.height - 30;
-    var dx = 0;
-    var dy = 0;
+    var dx = 2;
+    var dy = -2;
     var ballRadius = 10;
 
     var paddleHeight = 10;
@@ -51,6 +51,16 @@
                 rightPressed = false;
             else if (e.keyCode === 37)
                 leftPressed = false;
+        }, false);
+
+    }
+
+    function setUpMouseEvent () {
+
+        document.addEventListener("mousemove", function (e) {
+            var relativeX = e.clientX - canvas.getBoundingClientRect().left;
+            if (relativeX > 0 && relativeX < canvas.width)
+                paddleX = relativeX - paddleWidth / 2;
         }, false);
 
     }
@@ -176,6 +186,7 @@
     }
 
     setUpKeyEvents();
+    setUpMouseEvent();
     setInterval(draw, 10);
 
 })();
