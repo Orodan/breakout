@@ -6,8 +6,8 @@
 
     var x = canvas.width / 2;
     var y = canvas.height - 30;
-    var dx = 2;
-    var dy = -2;
+    var dx = 0;
+    var dy = 0;
     var ballRadius = 10;
 
     var paddleHeight = 10;
@@ -32,6 +32,8 @@
             bricks[c][r] = { x : 0, y : 0, status : 1 };
         }
     }
+
+    var score = 0;
 
     function setUpKeyEvents () {
 
@@ -119,6 +121,12 @@
                     if (x + ballRadius > b.x && x - ballRadius < b.x + brickWidth && y + ballRadius > b.y && y - ballRadius < b.y + brickHeight) {
                         dy = -dy;
                         b.status = 0;
+                        score++;
+
+                        if (score === brickRowCount * brickColumnCount) {
+                            alert('Congratz, you won !');
+                            document.location.reload();
+                        }
                     }
 
                     // Calculate its position
@@ -140,6 +148,12 @@
 
     }
 
+    function drawScore () {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Score: " + score, 8, 20);
+    }
+
     function draw () {
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -152,6 +166,9 @@
 
         // Draw bricks
         drawBricks();
+
+        // Draw score
+        drawScore();
 
         // Update the position of the ball
         x += dx;
