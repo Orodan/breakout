@@ -207,10 +207,12 @@
         // Update the position of the ball
         x += dx;
         y += dy;
+
+        requestAnimationFrame(draw);
     }
 
     setUpKeyEvents();
     setUpMouseEvent();
-    setInterval(draw, 10);
+    draw();
 
 })();
