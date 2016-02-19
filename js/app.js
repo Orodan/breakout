@@ -34,6 +34,7 @@
     }
 
     var score = 0;
+    var lives = 3;
 
     function setUpKeyEvents () {
 
@@ -88,8 +89,22 @@
                 dy = -dy;
             }
             else {
-                alert('Game over');
-                document.location.reload();
+
+                lives--;
+                // No more lives, game over
+                if (!lives) {
+                    alert('Game over');
+                    document.location.reload();
+                }
+                // The user has still lives, replace the ball and the paddle
+                else {
+                    x = canvas.width / 2;
+                    y = canvas.height - 30;
+                    dx = 2;
+                    dy = 2;
+                    paddleX = (canvas.width - paddleWidth) / 2;
+                }
+
             }
         }
         // Horizontal limit
@@ -164,6 +179,12 @@
         ctx.fillText("Score: " + score, 8, 20);
     }
 
+    function drawLives () {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+    }
+
     function draw () {
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -179,6 +200,9 @@
 
         // Draw score
         drawScore();
+
+        // Draw lives
+        drawLives();
 
         // Update the position of the ball
         x += dx;
